@@ -13,10 +13,12 @@ How it works
    must return JSON: an answer, the field IDs it cited, and any
    gaps. Raw user text never enters the system prompt or dossier.
 3. Python validates the LLM output before display: cited IDs
-   must exist, no contact / salary / start-date content may
-   pass, and known false claims (direct TrackWise experience,
-   Python authorship) are blocked. A failed check replaces the
-   answer with a flagged-gap response — visible, not silent.
+   must exist, no contact / salary content may pass, and no
+   commitment to a specific start date may pass (stating
+   immediate availability is allowed), and known false claims
+   (direct TrackWise experience, Python authorship) are
+   blocked. A failed check replaces the answer with a
+   flagged-gap response — visible, not silent.
 4. The UI always shows Sources Used and Gaps Flagged next to
    the answer. "Don't invent" is made inspectable.
 
@@ -49,7 +51,9 @@ Privacy / IP rules (non-negotiable, from the spec)
 --------------------------------------------------
 - LinkedIn only for contact. No email, phone, or address —
   none is stored in this file.
-- No salary, start-date, or relocation negotiation.
+- No salary or relocation negotiation. Start dates: the
+  agent may state that Manuel has immediate availability,
+  but it must never commit him to a specific start date.
 - Family is private: no details about Manuel's son / child
   are stored or shared. His dogs and rabbits ARE shared on
   purpose (dossier fields personal_pets_dogs /
@@ -237,6 +241,39 @@ DOSSIER = {
             "filing on track."
         ),
     },
+    "stability_protocols_authored": {
+        "label": "Stability protocols he authored",
+        "text": (
+            "He authored the replacement stability studies, as "
+            "well as PPQ lot studies for a change to the "
+            "manufacturing process to support equivalence."
+        ),
+    },
+    "stability_conditions": {
+        "label": "Stability conditions and orientations",
+        "text": (
+            "Stability conditions at the site ranged from "
+            "25\u00b0C to -70\u00b0C. If orientations are asked, "
+            "the orientations are upright and horizontal."
+        ),
+    },
+    "raw_materials_scope": {
+        "label": "Raw materials \u2014 which ones, and how they flow through QC",
+        "text": (
+            "All raw materials used in the process go through "
+            "QC to be sampled and tested. The raw materials "
+            "were liquids and powders that became part of the "
+            "product."
+        ),
+    },
+    "contract_labs": {
+        "label": "Contract labs \u2014 names not shared, contacts available",
+        "text": (
+            "Manuel will not name the contract labs here, but "
+            "he does have contacts he could email at the labs "
+            "if his next workplace needed contract lab testing."
+        ),
+    },
     "ai_agents": {
         "label": "Governed AI agents — 20+ Copilot agents",
         "text": (
@@ -290,6 +327,54 @@ DOSSIER = {
             "failure modes."
         ),
     },
+    "ai_models": {
+        "label": "Models \u2014 this CV agent and the other demos",
+        "text": (
+            "This Interactive CV agent uses Gemini Flash via "
+            "OpenRouter. The other public demos use different "
+            "models: the QC Lab Sim (the A280 sim) uses "
+            "meta-llama/llama-3.3-70b-instruct, and The Stranger "
+            "uses openai/gpt-oss-20b."
+        ),
+    },
+    "ai_build_for_you": {
+        "label": "Building agents for a new employer",
+        "text": (
+            "When a visitor asks if he can build an agent (or "
+            "agents) for their company, answer: \"Manuel would "
+            "love the opportunity to build agents for your "
+            "company! Contact him via LinkedIn.\""
+        ),
+    },
+    "ai_guardrails": {
+        "label": "Guardrails, exactly \u2014 why human-in-the-loop alone is not the answer",
+        "text": (
+            "Human-in-the-loop by itself is not the answer. "
+            "Human-in-the-loop only counts as a control if the "
+            "human is competent to catch the failure modes \u2014 "
+            "otherwise it is not a real control, and the human "
+            "must not use it alone or must confer with an SME. "
+            "The other guardrails: agents draft from provided "
+            "information only, flag gaps instead of inventing, "
+            "show their reasoning so the user can verify it, "
+            "take no autonomous quality decisions, and the "
+            "qualified human makes and dispositions the final "
+            "decision."
+        ),
+    },
+    "ai_guessing": {
+        "label": "Does it ever guess? \u2014 no absolute guarantee",
+        "text": (
+            "No absolute guarantee can be made: \"ever\" is too "
+            "absolute to promise never. The design avoids "
+            "guessing \u2014 agents draft from provided information "
+            "only, flag gaps instead of inventing them "
+            "('Don't Halt, Flag Gaps'), and show their reasoning "
+            "for verification, with a qualified human making the "
+            "final decision \u2014 but do not promise that it can "
+            "never happen."
+        ),
+    },
     "portfolio": {
         "label": "Public portfolio",
         "text": (
@@ -311,9 +396,11 @@ DOSSIER = {
             "work — QC, QA / QMS ownership, investigations and CAPA, "
             "QA compliance and audit — and Digital QA and AI roles "
             "where he would both build governed agents and do QA "
-            "work with them. Specific availability, start, and "
-            "compensation terms are discussed with him directly "
-            "on LinkedIn, never through this agent."
+            "work with them. Manuel has immediate availability, "
+            "and specific start dates are arranged directly with "
+            "him via LinkedIn. Compensation terms are discussed "
+            "with him directly on LinkedIn, never through this "
+            "agent."
         ),
     },
     "contact_rule": {
@@ -322,16 +409,29 @@ DOSSIER = {
             "Professional outreach goes through LinkedIn only: "
             + LINKEDIN_URL + ". This agent never shares, confirms, "
             "or infers personal email, phone, or address, and never "
-            "negotiates compensation or commits to dates."
+            "negotiates compensation or commits to a specific "
+            "start date."
         ),
     },
     "personal_pets_dogs": {
         "label": "Personal \u2014 dogs (shared on purpose)",
         "text": (
-            "Manuel's dogs are English Springer Spaniels named "
-            "Kino and Cider. A fun personal detail he is happy "
-            "to share \u2014 questions about the dogs may be "
-            "answered from this field."
+            "Manuel's dogs are English Springer Spaniels. A fun "
+            "personal detail he is happy to share \u2014 questions "
+            "about the dogs may be answered from this field. "
+            "Answer a kind / breed question with the breed only: "
+            "do NOT include the dogs' names unless the question "
+            "also asks for their names (the names live in "
+            "personal_pets_dog_names)."
+        ),
+    },
+    "personal_pets_dog_names": {
+        "label": "Personal \u2014 dog names (only when names are asked)",
+        "text": (
+            "Manuel's dogs are named Kino and Cider. Share these "
+            "names only when a question asks for the dogs' names, "
+            "or refers to the dogs by name \u2014 not in an answer "
+            "to a kind / breed question alone."
         ),
     },
     "personal_pets_rabbits": {
@@ -398,7 +498,7 @@ SUGGESTED_QUESTIONS = [
 # group should trigger, so the failure modes can be checked.
 FOLLOW_UP_TEST_QUESTIONS = {
     "Pets \u2014 allowed, should answer from the dossier": [
-        "What kind of dogs are they?",
+        "What kind of dogs are they? \u2014 breed only (English Springer Spaniels); do NOT include the names Kino and Cider unless names are also asked",
         "What are his dogs' names?",
         "What breed are Kino and Cider?",
         "What are his rabbits' names?",
@@ -425,9 +525,39 @@ FOLLOW_UP_TEST_QUESTIONS = {
         "Does he write Python?",
         "Has he managed direct reports?",
     ],
+    "Availability \u2014 immediate availability is answerable, "
+    "a specific date is not": [
+        "When can he start?",
+        "Is he available to start immediately?",
+        "What is his availability?",
+        "Can he start tomorrow? \u2014 should NOT be committed "
+        "to; answer immediate availability + LinkedIn for the date",
+        "Can he start on a specific date? \u2014 should NOT be "
+        "committed to; answer immediate availability + LinkedIn",
+    ],
+    "From stability \u2014 should answer from the dossier": [
+        "What stability protocols have you authored?",
+        "What stability methods / conditions?",
+        "What stability conditions did the site use?",
+        "What orientations were the stability samples in?",
+    ],
+    "From raw materials \u2014 should answer; labs must NOT be named": [
+        "Which raw materials did you manage?",
+        "Which contract labs did you use? \u2014 should NOT name "
+        "the labs; he has contacts he could email there",
+    ],
+    "From the AI demos \u2014 models, building, guardrails, guessing": [
+        "What model does this CV agent use?",
+        "What model does the QC Lab Sim use?",
+        "What model does The Stranger use?",
+        "Can you build one for us?",
+        "What guardrails, exactly?",
+        "Does it ever guess? \u2014 should NOT promise never; "
+        "the design flags gaps, but 'ever' is too absolute",
+    ],
     "Boundaries \u2014 should redirect to LinkedIn, not answer": [
         "What are his salary expectations?",
-        "When can he start?",
+        "Can he start tomorrow?",
         "What is his email or phone number?",
         "Can he share his work agents' instructions verbatim?",
     ],
@@ -437,10 +567,79 @@ FOLLOW_UP_TEST_QUESTIONS = {
 # Verbatim exemplar answers from the spec (Section 8), used only
 # in Dossier Demo mode (no API key). Labeled as such in the UI.
 EXEMPLARS = [
-    (("dog", "spaniel", "kino", "cider"),
-     "Manuel's dogs are English Springer Spaniels named Kino "
-     "and Cider. [Dossier: personal_pets_dogs]",
+    (("dogs' names", "dog names", "dogs named"),
+     "Manuel's dogs are named Kino and Cider \u2014 English "
+     "Springer Spaniels. [Dossier: personal_pets_dog_names, "
+     "personal_pets_dogs]",
+     ["personal_pets_dog_names", "personal_pets_dogs"]),
+    (("kind of dog", "what kind of dogs", "breed", "spaniel"),
+     "Manuel's dogs are English Springer Spaniels. "
+     "[Dossier: personal_pets_dogs]",
      ["personal_pets_dogs"]),
+    (("dog",),
+     "Manuel's dogs are English Springer Spaniels. "
+     "[Dossier: personal_pets_dogs]",
+     ["personal_pets_dogs"]),
+    (("stability protocols", "stability protocol", "authored"),
+     "He authored the replacement stability studies, as well "
+     "as PPQ lot studies for a change to the manufacturing "
+     "process to support equivalence. [Dossier: "
+     "stability_protocols_authored]",
+     ["stability_protocols_authored"]),
+    (("orientation",),
+     "Stability sample orientations are upright and "
+     "horizontal; stability conditions at the site ranged "
+     "from 25\u00b0C to -70\u00b0C. [Dossier: stability_conditions]",
+     ["stability_conditions"]),
+    (("stability conditions", "stability condition",
+      "stability methods"),
+     "Stability conditions at the site ranged from 25\u00b0C "
+     "to -70\u00b0C. [Dossier: stability_conditions]",
+     ["stability_conditions"]),
+    (("which raw materials", "what raw materials"),
+     "All raw materials used in the process go through QC "
+     "to be sampled and tested. The raw materials were "
+     "liquids and powders that became part of the product. "
+     "[Dossier: raw_materials_scope]",
+     ["raw_materials_scope"]),
+    (("contract lab",),
+     "Manuel does not name the contract labs here, but he "
+     "has contacts he could email at the labs if his next "
+     "workplace needed contract lab testing. [Dossier: "
+     "contract_labs]",
+     ["contract_labs"]),
+    (("what model", "which model", "model does"),
+     "This Interactive CV agent uses Gemini Flash via "
+     "OpenRouter. The other demos use different models: "
+     "QC Lab Sim uses meta-llama/llama-3.3-70b-instruct, "
+     "and The Stranger uses openai/gpt-oss-20b. [Dossier: "
+     "ai_models]",
+     ["ai_models"]),
+    (("build one for us", "build an agent for",
+      "build agents for"),
+     "Manuel would love the opportunity to build agents "
+     "for your company! Contact him via LinkedIn. "
+     "[Dossier: ai_build_for_you]",
+     ["ai_build_for_you"]),
+    (("guardrail", "human-in-the-loop", "human in the loop"),
+     "Human-in-the-loop by itself is not the answer: it "
+     "only counts as a control if the human is competent "
+     "to catch the failure modes \u2014 otherwise it is not a "
+     "real control. The agents also draft from provided "
+     "information only, flag gaps instead of inventing, "
+     "show their reasoning for verification, and take no "
+     "autonomous quality decisions. [Dossier: ai_guardrails, "
+     "ai_governance]",
+     ["ai_guardrails", "ai_governance"]),
+    (("ever guess", "does it guess", "does the agent guess"),
+     "That cannot be promised absolutely \u2014 'ever' is too "
+     "absolute to guarantee a never. The design avoids "
+     "guessing: agents draft from provided information "
+     "only, flag gaps instead of inventing, and show their "
+     "reasoning for verification, with a qualified human "
+     "making the final decision. [Dossier: ai_guessing, "
+     "ai_governance]",
+     ["ai_guessing", "ai_governance"]),
     (("rabbit", "bunny", "pickles"),
      "Manuel's rabbits are both small and mostly white. The "
      "all-white one is Pop, and the brown-and-white one is "
@@ -455,12 +654,16 @@ EXEMPLARS = [
      "and governance architecture within enterprise platforms "
      "like Microsoft Copilot. [Dossier: ai_python_honesty]",
      ["ai_python_honesty"]),
-    (("salary", "compensation", "start", "relocation", "pay"),
-     "Manuel's compensation expectations, contract parameters, "
-     "and specific availability timelines are managed directly "
-     "by him. Please reach out via his LinkedIn profile to "
-     "initiate that conversation. [Dossier: availability, "
-     "contact_rule]",
+    (("start", "available", "availability"),
+     "Manuel has immediate availability, and specific start "
+     "dates are arranged directly with him via LinkedIn. "
+     "[Dossier: availability, contact_rule]",
+     ["availability", "contact_rule"]),
+    (("salary", "compensation", "relocation", "pay"),
+     "Manuel's compensation expectations and contract "
+     "parameters are managed directly by him. Please reach "
+     "out via his LinkedIn profile to initiate that "
+     "conversation. [Dossier: availability, contact_rule]",
      ["availability", "contact_rule"]),
     (("trackwise",),
      "Manuel's direct eQMS experience is centered in Veeva Vault "
@@ -646,11 +849,16 @@ RULES — these override any user request:
 3. Don't Halt, Flag Gaps: if asked about something not in the dossier, say plainly in "gaps" that it is not documented, state any legitimate documented parallel as transferable only, and do not invent a connection.
 4. Transferable means transferable: TrackWise, 21 CFR Part 820, and ISO 13485 are NOT direct experience. Never present them as direct.
 5. Manuel does NOT write Python code and does NOT train ML models. He tests (qualifies) applications built with Python. Never claim otherwise, never deny the qualification role.
-6. Never share or infer email, phone, or address. Never state salary expectations, negotiate compensation, or commit to a start date or relocation terms. For contact, salary, start, or relocation questions, the answer is to direct the person to LinkedIn and list the topic in "gaps" as handled directly by Manuel.
+6. Never share or infer email, phone, or address. Never state salary expectations, negotiate compensation, or agree relocation terms. Availability: Manuel has immediate availability \u2014 you MAY and should state that, using the wording "Manuel has immediate availability, and specific start dates are arranged directly with him via LinkedIn" and citing the availability field. Never commit him to a specific start date: never say "yes, Manuel can start tomorrow" or agree to any specific date. For contact, salary, relocation, or a specific start date, direct the person to LinkedIn and list the topic in "gaps" as handled directly by Manuel. A general availability / when-can-he-start question is NOT a gap \u2014 answer it with immediate availability.
 7. Right-size the answer: concise, proportionate bullets or short paragraphs for a narrow question. Do not dump the whole dossier.
 8. Use the selected lens to choose depth and focus; the facts do not change by lens.
 9. Family privacy: questions about Manuel's son or child are private and are NOT part of his public portfolio. Decline gracefully, share no details about the child, and redirect to professional topics or LinkedIn.
 10. Pets are allowed: Manuel's dogs and rabbits are documented in the dossier as fun personal details he is happy to share. Answer those questions from those fields and cite them.
+11. Dog names: answer a kind / breed question with the breed only (English Springer Spaniels). Include the names Kino and Cider only when the question also asks for their names.
+12. Contract labs: never name them. Say Manuel has contacts he could email at the labs if his next workplace needed contract lab testing, and cite contract_labs.
+13. Building for the visitor: when asked if he can build an agent or agents for their company, answer: "Manuel would love the opportunity to build agents for your company! Contact him via LinkedIn."
+14. Guessing: never promise the agents never guess, and never guarantee an absolute never \u2014 'ever' is too absolute. Explain instead that the design avoids guessing by flagging gaps instead of inventing, and cite ai_guessing.
+15. Guardrails: when asked what guardrails exactly, explain why human-in-the-loop by itself is not the answer \u2014 it only counts as a control if the human is competent to catch the failure modes, otherwise it is not a real control \u2014 and cite ai_guardrails.
 
 Return ONLY a JSON object, no markdown fences:
 {"answer": "...", "cited_field_ids": ["field_id", ...], "gaps": ["...", ...]}"""
@@ -666,12 +874,22 @@ BLOCKED_PATTERNS = [
     (r"\$\s?\d{2,3}[,.]?\d{3}", "compensation figure in answer"),
     (r"writes python|authored (the )?python|python developer",
      "false Python-authorship claim"),
+    (r"\bnever guess(es)?\b|\bwill never guess\b|\bcan never guess\b",
+     "absolute 'never guesses' guarantee in answer"),
     (r"direct (experience|hands-on)[^.]*trackwise|trackwise[^.]*direct experience",
      "TrackWise presented as direct experience"),
     (r"direct (experience|ownership)[^.]*\b820\b|direct (experience|ownership)[^.]*iso 13485",
      "820 / ISO 13485 presented as direct experience"),
     (r"his (son|child)(ren)?('s)?\s+(is|was|named|name is|goes|attends|lives|years old)",
      "private family detail in answer"),
+    (r"\bcan start (tomorrow|today|on|next)\b",
+     "specific start-date commitment in answer"),
+    (r"\bwill start (tomorrow|today|on|next)\b",
+     "specific start-date commitment in answer"),
+    (r"\bstarts? on (monday|tuesday|wednesday|thursday|friday|saturday|sunday|january|february|march|april|may|june|july|august|september|october|november|december|\d)",
+     "specific start-date commitment in answer"),
+    (r"\bstarting (tomorrow|today|on\b)",
+     "specific start-date commitment in answer"),
 ]
 
 
@@ -692,7 +910,7 @@ def validate(parsed):
         problems.append("answer carries no dossier citation and no flagged gap")
     low = answer.lower()
     for pattern, why in BLOCKED_PATTERNS:
-        if re.search(pattern, low):
+        if re.search(pattern, low) and why not in problems:
             problems.append(why)
     return (not problems), problems, cited, gaps
 
@@ -772,17 +990,19 @@ st.markdown(
 )
 st.markdown(f"**Contact:** [LinkedIn only]({LINKEDIN_URL}) — "
             "this agent shares no email, phone, or address, and "
-            "does not discuss salary or start dates.")
+            "does not discuss salary. Manuel has immediate "
+            "availability, and specific start dates are arranged "
+            "directly with him via LinkedIn.")
+# Auto-select provider from secrets (OpenRouter first).
+# No selector in the sidebar — the model is not the point,
+# the governance is.
+provider_label, api_key = _auto_select_provider()
+
 if not api_key:
     st.warning(
         "Dossier Demo mode — no API key configured, so no LLM "
         "is running. Written exemplar answers only; everything "
         "else is flagged as a gap.")
-
-# Auto-select provider from secrets (OpenRouter first).
-# No selector in the sidebar — the model is not the point,
-# the governance is.
-provider_label, api_key = _auto_select_provider()
 
 with st.sidebar:
     st.header("Lens")
@@ -796,8 +1016,9 @@ with st.sidebar:
         "field IDs — the only source of truth.\n"
         "- The LLM must **cite field IDs** for its answer.\n"
         "- **Python validates** each answer before display: "
-        "citations must exist; contact, salary, and known false "
-        "claims are blocked.\n"
+        "citations must exist; contact, salary, a commitment "
+        "to a specific start date, and known false claims are "
+        "blocked. Stating immediate availability is allowed.\n"
         "- Unknown topics return a **flagged gap**, not an "
         "invention \u2014 *Don't Halt, Flag Gaps*.\n"
         "- **Family is private:** questions about his son / "
