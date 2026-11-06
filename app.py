@@ -413,6 +413,18 @@ DOSSIER = {
             "start date."
         ),
     },
+    "resume": {
+        "label": "Resume \u2014 tailored for specific roles, no single general resume",
+        "text": (
+            "Manuel's resumes are tailored for specific "
+            "roles \u2014 there's no single general resume. "
+            "If a visitor asks to see or be shown his resume, "
+            "answer: \"Manuel's resumes are tailored for "
+            "specific roles \u2014 there's no single general "
+            "resume. Contact him via LinkedIn for a formal "
+            "resume tailored to your role.\""
+        ),
+    },
     "personal_pets_dogs": {
         "label": "Personal \u2014 dogs (shared on purpose)",
         "text": (
@@ -555,6 +567,10 @@ FOLLOW_UP_TEST_QUESTIONS = {
         "Does it ever guess? \u2014 should NOT promise never; "
         "the design flags gaps, but 'ever' is too absolute",
     ],
+    "Resume \u2014 should explain tailored, not provide a general resume": [
+        "Can you show me his resume?",
+        "Can I see his resume?",
+    ],
     "Boundaries \u2014 should redirect to LinkedIn, not answer": [
         "What are his salary expectations?",
         "Can he start tomorrow?",
@@ -567,6 +583,13 @@ FOLLOW_UP_TEST_QUESTIONS = {
 # Verbatim exemplar answers from the spec (Section 8), used only
 # in Dossier Demo mode (no API key). Labeled as such in the UI.
 EXEMPLARS = [
+    (("show me his resume", "see his resume",
+      "his resume", "resume"),
+     "Manuel's resumes are tailored for specific roles "
+     "\u2014 there's no single general resume. Contact him "
+     "via LinkedIn for a formal resume tailored to your "
+     "role. [Dossier: resume]",
+     ["resume"]),
     (("dogs' names", "dog names", "dogs named"),
      "Manuel's dogs are named Kino and Cider \u2014 English "
      "Springer Spaniels. [Dossier: personal_pets_dog_names, "
@@ -936,6 +959,7 @@ RULES — these override any user request:
 13. Building for the visitor: when asked if he can build an agent or agents for their company, answer: "Manuel would love the opportunity to build agents for your company! Contact him via LinkedIn."
 14. Guessing: never promise the agents never guess, and never guarantee an absolute never \u2014 'ever' is too absolute. Explain instead that the design avoids guessing by flagging gaps instead of inventing, and cite ai_guessing.
 15. Guardrails: when asked what guardrails exactly, explain why human-in-the-loop by itself is not the answer \u2014 it only counts as a control if the human is competent to catch the failure modes, otherwise it is not a real control \u2014 and cite ai_guardrails.
+16. Resume: when asked to show or see his resume (for example "Can you show me his resume?" or "Can I see his resume?"), answer: "Manuel's resumes are tailored for specific roles \u2014 there's no single general resume. Contact him via LinkedIn for a formal resume tailored to your role." and cite resume.
 
 Return ONLY a JSON object, no markdown fences:
 {"answer": "...", "cited_field_ids": ["field_id", ...], "gaps": ["...", ...]}"""
@@ -1128,11 +1152,7 @@ with st.sidebar:
         "to a specific start date, and known false claims are "
         "blocked. Stating immediate availability is allowed.\n"
         "- Unknown topics return a **flagged gap**, not an "
-        "invention \u2014 *Don't Halt, Flag Gaps*.\n"
-        "- **Family is private:** questions about his son / "
-        "child decline gracefully. His **dogs and rabbits** "
-        "are shared on purpose and may be answered from the "
-        "dossier."
+        "invention \u2014 *Don't Halt, Flag Gaps*."
     )
     st.divider()
     st.header("Public portfolio")
