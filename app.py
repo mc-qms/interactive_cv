@@ -29,7 +29,7 @@ inside the dossier, citing sources, and flagging gaps. A small,
 cheap, fast model under tight constraints is the better proof:
 the governance does the work, not the model. The provider is
 auto-selected from whichever API key is present in Streamlit
-secrets (OpenRouter first) — Gemini Flash via OpenRouter,
+secrets (OpenRouter first) — Llama 3.3 70B via OpenRouter,
 Gemini Flash direct, Claude Haiku, or GPT-4o-mini. Same
 dossier, same validator, any model. There is no provider
 selector in the UI.
@@ -330,11 +330,11 @@ DOSSIER = {
     "ai_models": {
         "label": "Models \u2014 this CV agent and the other demos",
         "text": (
-            "This Interactive CV agent uses Gemini Flash via "
-            "OpenRouter. The other public demos use different "
-            "models: the QC Lab Sim (the A280 sim) uses "
-            "meta-llama/llama-3.3-70b-instruct, and The Stranger "
-            "uses openai/gpt-oss-20b."
+            "This Interactive CV agent uses Llama 3.3 70B "
+            "(meta-llama/llama-3.3-70b-instruct) via "
+            "OpenRouter. The QC Lab Sim (the A280 sim) uses "
+            "the same model, meta-llama/llama-3.3-70b-instruct, "
+            "and The Stranger uses openai/gpt-oss-20b."
         ),
     },
     "ai_build_for_you": {
@@ -596,6 +596,28 @@ EXEMPLARS = [
      "Stability conditions at the site ranged from 25\u00b0C "
      "to -70\u00b0C. [Dossier: stability_conditions]",
      ["stability_conditions"]),
+    (("stability chamber", "chamber excursion",
+      "filing on track"),
+     "Manuel investigated a stability chamber excursion "
+     "in Veeva eQMS: two root causes were identified \u2014 no "
+     "instruction to remove alarm suppression after return "
+     "to service, and no alarm check during "
+     "requalifications \u2014 with CAPA assigned to Facilities "
+     "and Validation, a preventive check of other BMS alarm "
+     "points, and replacement stability studies created to "
+     "keep the filing on track. [Dossier: investigations]",
+     ["investigations"]),
+    (("stability",),
+     "Manuel led Stability at Tanvex as subject-matter "
+     "expert \u2014 protocol generation, study initiation, "
+     "material requests, sample logistics, and data review. "
+     "He authored the replacement stability studies and PPQ "
+     "lot studies for a manufacturing-process change, and "
+     "stability conditions at the site ranged from 25\u00b0C "
+     "to -70\u00b0C. [Dossier: exp_tanvex, "
+     "stability_protocols_authored, stability_conditions]",
+     ["exp_tanvex", "stability_protocols_authored",
+      "stability_conditions"]),
     (("which raw materials", "what raw materials"),
      "All raw materials used in the process go through QC "
      "to be sampled and tested. The raw materials were "
@@ -609,9 +631,10 @@ EXEMPLARS = [
      "contract_labs]",
      ["contract_labs"]),
     (("what model", "which model", "model does"),
-     "This Interactive CV agent uses Gemini Flash via "
-     "OpenRouter. The other demos use different models: "
-     "QC Lab Sim uses meta-llama/llama-3.3-70b-instruct, "
+     "This Interactive CV agent uses Llama 3.3 70B "
+     "(meta-llama/llama-3.3-70b-instruct) via OpenRouter. "
+     "QC Lab Sim uses the same model, "
+     "meta-llama/llama-3.3-70b-instruct, "
      "and The Stranger uses openai/gpt-oss-20b. [Dossier: "
      "ai_models]",
      ["ai_models"]),
@@ -692,6 +715,60 @@ EXEMPLARS = [
      "causes and replacement studies created to keep the filing "
      "on track. [Dossier: investigations]",
      ["investigations"]),
+    (("raw material",),
+     "At Tanvex (Aug 2015 \u2013 Nov 2026), Manuel oversaw "
+     "raw materials and testing: all raw materials used in "
+     "the process go through QC to be sampled and tested, "
+     "and the raw materials were liquids and powders that "
+     "became part of the product. He was also the FDA "
+     "inspection SME for Raw Materials. [Dossier: "
+     "exp_tanvex, raw_materials_scope]",
+     ["exp_tanvex", "raw_materials_scope"]),
+    (("environmental monitoring", "cleanroom"),
+     "Yes \u2014 Manuel did environmental monitoring in "
+     "Grades A\u2013D cleanrooms (viable and non-viable "
+     "monitoring, excursion trend analysis) as an "
+     "Environmental Monitoring Associate at Sigma-Aldrich, "
+     "and cleanroom monitoring is part of his QC methods "
+     "background. [Dossier: exp_sigma, qc_methods]",
+     ["exp_sigma", "qc_methods"]),
+    (("change-control", "change control"),
+     "Manuel routes document, change-control, and "
+     "deviation workflows in Veeva Vault, and built "
+     "governed Copilot workflows that compare documents "
+     "for change-control adherence. [Dossier: exp_tanvex, "
+     "systems_direct, ai_agents]",
+     ["exp_tanvex", "systems_direct", "ai_agents"]),
+    (("fda inspection", "inspection"),
+     "Manuel supported an FDA pre-approval inspection at "
+     "Tanvex as subject-matter expert for Raw Materials "
+     "and Stability. [Dossier: exp_tanvex]",
+     ["exp_tanvex"]),
+    (("regulation", "regulations"),
+     "Direct: FDA 21 CFR Parts 11, 210, and 211; USP/EP "
+     "compendial standards; cGMP data integrity (ALCOA+); "
+     "and ICH Q7/Q9/Q10 applied in document and "
+     "investigation work. 21 CFR Part 820 and ISO 13485 "
+     "are transferable familiarity only, not direct "
+     "experience. [Dossier: regulatory_direct, "
+     "regulatory_transferable]",
+     ["regulatory_direct", "regulatory_transferable"]),
+    (("semantic primitives", "don't halt", "flag gaps"),
+     "Semantic Primitives is Manuel's framework for "
+     "governing AI agents in regulated environments. Its "
+     "named primitives include 'Don't Halt, Flag Gaps' "
+     "\u2014 the agent keeps processing available data while "
+     "explicitly tagging missing or non-compliant "
+     "information for human review, instead of inventing "
+     "it. [Dossier: ai_governance]",
+     ["ai_governance"]),
+    (("public demo", "demos can", "the stranger",
+      "qc lab sim", "lab sim"),
+     "Public demos: the Semantic Primitives framework on "
+     "GitHub, The Stranger (an adversarial audit demo), "
+     "and QC Lab Sim (an A280 training simulation). "
+     "[Dossier: portfolio]",
+     ["portfolio"]),
     (("method", "lab", "test", "spectroscopy"),
      "His documented methods include UV/Vis Spectroscopy, "
      "Osmolality, pH, Syringe Functional Forces, Ion "
@@ -736,9 +813,9 @@ def _is_private_family_question(question):
 #    not open-ended reasoning. Any provider; same validator.
 # ------------------------------------------------------------------
 PROVIDERS = {
-    "Gemini Flash via OpenRouter": {
+    "Llama 3.3 70B via OpenRouter": {
         "secret": "OPENROUTER_API_KEY",
-        "model": "google/gemini-2.0-flash",
+        "model": "meta-llama/llama-3.3-70b-instruct",
     },
     "Gemini Flash (Google)": {
         "secret": "GEMINI_API_KEY", "model": "gemini-2.0-flash",
@@ -945,11 +1022,42 @@ def answer_question(question, lens, provider_label, api_key):
         raw = call_llm(provider_label, api_key, SYSTEM_PROMPT, user_payload)
         raw = raw.strip().removeprefix("```json").removeprefix("```").removesuffix("```")
         parsed = json.loads(raw)
-    except Exception as exc:  # API / parse failure: flag, never invent
-        return {"answer": GAP_NOTICE, "cited": [], "blocked": False,
-                "problems": [],
-                "gaps": [f"The model call failed ({type(exc).__name__}), "
-                         "so no answer was generated rather than guessed."]}
+    except Exception as exc:  # API / parse failure: fall back, never fake a gap
+        # The model call failed (e.g. HTTPError) — that is a
+        # temporary model error, NOT a gap in the dossier.
+        # Fall back to the Dossier Demo exemplar answers where
+        # one covers the question, and say plainly that the
+        # model call failed rather than presenting the generic
+        # not-in-portfolio notice as if Manuel's dossier
+        # lacked the answer.
+        failure_note = (
+            f"Live model call failed ({type(exc).__name__}) "
+            "\u2014 a temporary model error, not a gap in "
+            "Manuel's dossier."
+        )
+        fallback = demo_answer(question)
+        if fallback.get("cited"):
+            fallback = dict(fallback)
+            fallback["gaps"] = (
+                [failure_note] + list(fallback.get("gaps") or [])
+            )
+            fallback["demo"] = False
+            fallback["model_failed"] = True
+            return fallback
+        return {
+            "answer": (
+                "The live model call failed, so I couldn't "
+                "generate a live answer for that question "
+                "right now. This is a temporary model error "
+                "\u2014 not a gap in Manuel's documented "
+                "portfolio, and the question may well be "
+                "answered in his dossier. Please try again "
+                "in a moment, or connect with Manuel "
+                "directly on LinkedIn."
+            ),
+            "cited": [], "blocked": False, "problems": [],
+            "gaps": [failure_note], "model_failed": True,
+        }
     ok, problems, cited, gaps = validate(parsed)
     if not ok:
         return {"answer": GAP_NOTICE, "cited": cited, "gaps": gaps,
@@ -1051,22 +1159,11 @@ with left:
         if cols[i % 2].button(q, key=f"chip_{lens}_{i}",
                               use_container_width=True):
             clicked = q
-    with st.expander("All chips, grouped by lens"):
-        for bank_lens, questions in BANKED_QUESTIONS.items():
-            st.markdown(f"**{bank_lens}**")
-            for q in questions:
-                st.markdown(f"- {q}")
-    with st.expander(
-            "Failure-mode & follow-up test questions "
-            "\u2014 type these to test the agent"):
-        st.caption(
-            "Speculative follow-ups a visitor might ask next, "
-            "grouped by the behaviour they should trigger. "
-            "These are a test list, not chips.")
-        for group, questions in FOLLOW_UP_TEST_QUESTIONS.items():
-            st.markdown(f"**{group}**")
-            for q in questions:
-                st.markdown(f"- {q}")
+    # NOTE: BANKED_QUESTIONS and FOLLOW_UP_TEST_QUESTIONS are
+    # kept in the code above for testing only. They are
+    # intentionally NOT rendered as expanders in the public
+    # UI \u2014 they cluttered the page and buried the
+    # "Ask a question" box below.
     typed = st.chat_input("Ask a question about Manuel's background…")
     question = typed or clicked
     if question:
@@ -1083,6 +1180,12 @@ with right:
         if result.get("demo"):
             st.info("Dossier Demo mode: written exemplar answer, "
                     "not a live LLM response.")
+        if result.get("model_failed"):
+            st.warning(
+                "The live model call failed \u2014 a temporary "
+                "model error, not a gap in Manuel's dossier. "
+                "Where a written dossier exemplar covers the "
+                "question, it is shown above as the fallback.")
         if result.get("blocked"):
             st.error("Validator blocked the model's draft: "
                      + "; ".join(result["problems"])
