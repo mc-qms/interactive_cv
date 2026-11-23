@@ -394,7 +394,7 @@ DOSSIER = {
             "November 2026 and actively looking. His lane is "
             "principal / staff-level individual-contributor quality "
             "work — QC, QA / QMS ownership, investigations and CAPA, "
-            "QA compliance and audit — and Digital QA and AI roles "
+            "QA compliance and audit — and AI governance and Digital QA roles "
             "where he would both build governed agents and do QA "
             "work with them. Manuel has immediate availability, "
             "and specific start dates are arranged directly with "
@@ -461,7 +461,7 @@ DOSSIER = {
 LENSES = {
     "QC": "Quality Control: bench-level cGMP, raw materials, stability, methods, sampling, and laboratory investigations.",
     "QA": "Quality Assurance: QMS and eQMS workflows, controlled documents, change control, deviations, CAPA, and audit readiness.",
-    "Digital QA and AI": "Digital quality and governed AI: agent design, prompt engineering, governance architecture, and qualification.",
+    "AI Governance and Digital QA": "AI governance and digital quality: governance architecture, agent design, prompt engineering, and qualification.",
 }
 
 # Chips change with the lens: each lens gets its OWN small set
@@ -489,7 +489,7 @@ BANKED_QUESTIONS = {
         "Did he support an FDA inspection, and in what role?",
         "What regulations has he worked under directly?",
     ],
-    "Digital QA and AI": [
+    "AI Governance and Digital QA": [
         "What AI agents has he built?",
         "How does he build governed AI agents?",
         "What is Semantic Primitives and 'Don't Halt, Flag Gaps'?",
@@ -1117,7 +1117,7 @@ st.markdown(
     "biopharmaceutical cGMP experience** who also designs "
     "**governed AI agents for regulated environments**. "
     "Impacted by a reduction in force in November 2026 and "
-    "looking for QC, QA, and Digital QA and AI work in the "
+    "looking for QC, QA, Digital QA, and AI governance work in the "
     "San Diego area or remote-US."
 )
 st.markdown(f"**Contact:** [LinkedIn only]({LINKEDIN_URL}) — "
