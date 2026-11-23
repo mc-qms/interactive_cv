@@ -1142,19 +1142,6 @@ with st.sidebar:
                     list(LENSES.keys()), index=2)
     st.caption(LENSES[lens])
     st.divider()
-    st.header("How this is governed")
-    st.markdown(
-        "- Every fact lives in a structured **dossier** with "
-        "field IDs — the only source of truth.\n"
-        "- The LLM must **cite field IDs** for its answer.\n"
-        "- **Python validates** each answer before display: "
-        "citations must exist; contact, salary, a commitment "
-        "to a specific start date, and known false claims are "
-        "blocked. Stating immediate availability is allowed.\n"
-        "- Unknown topics return a **flagged gap**, not an "
-        "invention \u2014 *Don't Halt, Flag Gaps*."
-    )
-    st.divider()
     st.header("Public portfolio")
     st.markdown(
         "- [Semantic Primitives — agent governance framework]"
