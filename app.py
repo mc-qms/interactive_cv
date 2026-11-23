@@ -1192,7 +1192,7 @@ with left:
         st.session_state["result"] = (question, result)
 
 with right:
-    st.header("Show your work")
+    st.header("Answer")
     if "result" in st.session_state:
         q_shown, result = st.session_state["result"]
         st.caption(f"Question: {q_shown}")
@@ -1206,32 +1206,11 @@ with right:
                 "model error, not a gap in Manuel's dossier. "
                 "Where a written dossier exemplar covers the "
                 "question, it is shown above as the fallback.")
-        if result.get("blocked"):
-            st.error("Validator blocked the model's draft: "
-                     + "; ".join(result["problems"])
-                     + ". A flagged gap was shown instead.")
-        st.subheader("Sources used")
-        if result["cited"]:
-            for fid in result["cited"]:
-                st.markdown(f"- `{fid}` — {DOSSIER[fid]['label']}")
-        else:
-            st.markdown("_No dossier fields cited._")
-        st.subheader("Gaps flagged")
-        if result["gaps"]:
-            for gap in result["gaps"]:
-                st.markdown(f"- {gap}")
-        else:
-            st.markdown("_None._")
     else:
         st.markdown(
             "Pick a suggested question or type your own. The "
-            "answer will appear here with the dossier fields it "
-            "cited and anything it flagged as a gap — so you can "
-            "verify why each line is there.")
+            "answer will appear here.")
 
-with st.expander("Browse the dossier (the agent's only source of truth)"):
-    for fid, entry in DOSSIER.items():
-        st.markdown(f"**`{fid}` — {entry['label']}**\n\n{entry['text']}")
 
 st.divider()
 st.caption(
